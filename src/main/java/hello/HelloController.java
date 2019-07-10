@@ -12,14 +12,14 @@ public class HelloController {
     
     @RequestMapping("/")
     public String index() throws IOException {
-        Response response = JsonSpringUtil.fromJsonResource("localData/SampleResponse.json", Response.class);
+        Response response = JsonSpringUtil.fromJsonResource("localData/CurrentResponse.json", Response.class);
         return response.getResponseText() + new Date(response.getTimestamp()).toString();
     }
 
     @RequestMapping("/change")
     public void change(@RequestParam String newGreeting) throws IOException {
         Response response = new Response(newGreeting, System.currentTimeMillis());
-        JsonSpringUtil.toJsonResource("localData/SampleResponse.json", response);
+        JsonSpringUtil.toJsonResource("localData/CurrentResponse.json", response);
     }
     
 }
