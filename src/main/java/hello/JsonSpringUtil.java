@@ -13,7 +13,7 @@ public class JsonSpringUtil {
     // loads from the resources folder, rather than user.dir
     public static <T> T fromClassPathJson(String relativePath, Class<? extends T> classToBeCreated) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return  mapper.readValue(new ClassPathResource(relativePath).getFile(), classToBeCreated);
+        return  mapper.readValue(new ClassPathResource(relativePath).getInputStream(), classToBeCreated);
     }
 
     public static <T> T fromFileSystemJson(String relativePath, Class<? extends T> classToBeCreated) throws IOException {
