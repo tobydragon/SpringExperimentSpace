@@ -16,8 +16,8 @@ class JsonSpringUtilTest {
     public void toJsonAndFromResourceTest(@TempDir Path tempDir) throws IOException {
         Path tempFile = tempDir.resolve("SampleResponse.json");
         Response responseOut = new Response("tendon", System.currentTimeMillis());
-        JsonSpringUtil.toJsonResource(tempFile.toString(), responseOut);
-        Response responseIn = JsonSpringUtil.fromJsonResource(tempFile.toString(), Response.class);
+        JsonSpringUtil.toFileSystemJson(tempFile.toString(), responseOut);
+        Response responseIn = JsonSpringUtil.fromFileSystemJson(tempFile.toString(), Response.class);
         assertEquals(responseOut, responseIn);
     }
 

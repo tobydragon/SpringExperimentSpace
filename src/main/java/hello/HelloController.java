@@ -9,17 +9,24 @@ import java.util.Date;
 
 @RestController
 public class HelloController {
-    
+
+    @RequestMapping("/resetToDefault")
+    public String defaultGreeting() throws IOException {
+        Response response = JsonSpringUtil.fromClassPathJson("DefaultResponse.json", Response.class);
+        return response.getResponseText() + " at " + new Date(response.getTimestamp()).toString();
+    }
+
+
     @RequestMapping("/")
-    public String index() throws IOException {
-        Response response = JsonSpringUtil.fromJsonResource("localData/CurrentResponse.json", Response.class);
-        return response.getResponseText() + new Date(response.getTimestamp()).toString();
+    public String greeting() throws IOException {
+        Response response = JsonSpringUtil.fromFileSystemJson("localData/CurrentResponse.json", Response.class);
+        return response.getResponseText() + " at " + new Date(response.getTimestamp()).toString();
     }
 
     @RequestMapping("/change")
     public void change(@RequestParam String newGreeting) throws IOException {
         Response response = new Response(newGreeting, System.currentTimeMillis());
-        JsonSpringUtil.toJsonResource("localData/CurrentResponse.json", response);
+        JsonSpringUtil.toFileSystemJson("localData/CurrentResponse.json", response);
     }
     
 }
