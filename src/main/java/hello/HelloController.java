@@ -10,6 +10,12 @@ import java.util.Date;
 @RestController
 public class HelloController {
 
+    private ResponsePoolDatastore responsePoolDatastore;
+
+    public HelloController() throws IOException{
+        this.responsePoolDatastore = new JsonResponsePoolDatastore("src/test/resources/ResponsesList.json");
+    }
+
     @RequestMapping("/resetToDefault")
     public String defaultGreeting() throws IOException {
         Response response = JsonSpringUtil.fromClassPathJson("DefaultResponse.json", Response.class);
@@ -29,6 +35,11 @@ public class HelloController {
         Response response = new Response(newGreeting, System.currentTimeMillis());
         JsonSpringUtil.toFileSystemJson("localData/CurrentResponse.json", response);
         return greeting();
+    }
+
+    @RequestMapping("/remove")
+    public void remove(@RequestParam String toDelete) throws IOException {
+        responsePoolDatastore.removeResponse(toDelete);
     }
     
 }

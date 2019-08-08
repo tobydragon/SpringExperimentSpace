@@ -16,16 +16,22 @@ public class JsonResponsePoolDatastore implements ResponsePoolDatastore {
 
     @Override
     public List<Response> getAllResponses() {
-        return new ArrayList<Response>(responses);
+        return new ArrayList<>(responses);
     }
 
     @Override
-    public void addResponse(Response responseIn) {
+    public void addResponse(Response responseIn) throws IOException {
         responses.add(responseIn);
+        JsonUtil.toJsonFile(filePath, responses);
     }
 
     @Override
-    public void removeResponse(Response responseIn) {
-        responses.remove(responseIn);
+    public void removeResponse(String responseTextIn) throws IOException {
+        for(Response currResponse : responses){
+            if(currResponse.getResponseText().equals(responseTextIn)){
+                responses.remove(currResponse);
+                JsonUtil.toJsonFile(filePath, responses);
+            }
+        }
     }
 }
